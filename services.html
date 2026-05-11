@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Services — Alexandria Rose</title>
+  <meta name="description" content="The work — haircuts, color, bridal, editorial." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;1,9..144,300&family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500&display=swap">
+  <script>
+    (function () {
+      try {
+        var t = localStorage.getItem("ar-theme");
+        if (!t) t = (window.matchMedia && matchMedia("(prefers-color-scheme: dark)").matches) ? "ink" : "cream";
+        document.documentElement.setAttribute("data-theme", t);
+      } catch (e) {
+        document.documentElement.setAttribute("data-theme", "cream");
+      }
+    })();
+  </script>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+<header class="site-header">
+  <nav class="nav" aria-label="Primary">
+    <a href="index.html" class="wordmark">Alexandria Rose</a>
+    <div class="nav-right">
+      <ul class="nav-links">
+        <li><a href="portfolio.html">Portfolio</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="services.html" aria-current="page">Services</a></li>
+        <li><a href="new-clients.html">New Clients</a></li>
+        <li><a href="faq.html">FAQ</a></li>
+        <li><a href="#contact">Book</a></li>
+      </ul>
+      <div class="theme-switch" role="group" aria-label="Theme">
+        <button type="button" data-theme="cream" aria-label="Cream theme" title="Cream"></button>
+        <button type="button" data-theme="ink" aria-label="Ink theme" title="Ink"></button>
+        <button type="button" data-theme="bone" aria-label="Bone theme" title="Bone"></button>
+        <button type="button" data-theme="bone-alt" aria-label="Bone alt theme" title="Bone · Instrument"></button>
+      </div>
+    </div>
+  </nav>
+</header>
+
+<main>
+
+  <section class="container">
+    <div class="page-intro">
+      <div>
+        <p class="eyebrow">The Work</p>
+        <h1 class="display" style="font-size: clamp(2.75rem, 7vw, 5.5rem); margin-top: 1rem;">
+          Four <em>shapes</em><br />of work.
+        </h1>
+      </div>
+      <p class="lede">
+        Services are customized. Pricing reflects time, product, and the long-term plan required to achieve and maintain your hair.
+      </p>
+    </div>
+
+    <div class="services-grid">
+
+      <article class="service-card">
+        <div class="service-image">
+          <div class="ph" data-label="cut · 4:5"></div>
+        </div>
+        <div class="service-content">
+          <p class="service-no">No. 01 / Four</p>
+          <h2 class="service-title"><em>Haircuts</em></h2>
+          <ul class="service-tiers">
+            <li class="service-tier">
+              <span class="tier-name">Haircut</span><span class="tier-duration">1 hour</span>
+              <span class="tier-price">$150</span>
+              <button type="button" class="tier-add"
+                data-id="haircut-basic" data-square-id="[square-id]" data-name="Haircut"
+                data-dur-min="60" data-dur-max="60"
+                data-price-min="150" data-price-max="150"
+                aria-label="Add Haircut">+</button>
+            </li>
+            <li class="service-tier">
+              <span class="tier-name">Avant-garde</span><span class="tier-duration">1.5 hours</span>
+              <span class="tier-price">$175</span>
+              <button type="button" class="tier-add"
+                data-id="haircut-avant" data-square-id="[square-id]" data-name="Avant-garde cut"
+                data-dur-min="90" data-dur-max="90"
+                data-price-min="175" data-price-max="175"
+                aria-label="Add Avant-garde cut">+</button>
+            </li>
+            <li class="service-tier">
+              <span class="tier-name">Curly cut / Long to short</span><span class="tier-duration">2 hours</span>
+              <span class="tier-price">$225</span>
+              <button type="button" class="tier-add"
+                data-id="haircut-curly-long" data-square-id="[square-id]" data-name="Curly cut / Long to short"
+                data-dur-min="120" data-dur-max="120"
+                data-price-min="225" data-price-max="225"
+                aria-label="Add Curly cut / Long to short">+</button>
+            </li>
+          </ul>
+          <a href="#contact" class="btn-inline service-cta">Inquire →</a>
+        </div>
+      </article>
+
+      <article class="service-card">
+        <div class="service-image">
+          <div class="ph" data-label="color · application detail"></div>
+        </div>
+        <div class="service-content">
+          <p class="service-no">No. 02 / Four</p>
+          <h2 class="service-title"><em>Color</em></h2>
+          <ul class="service-tiers">
+            <li class="service-tier">
+              <span class="tier-name">Basic</span><span class="tier-duration">2 hours</span>
+              <span class="tier-price">$350</span>
+              <button type="button" class="tier-add"
+                data-id="color-basic" data-square-id="[square-id]" data-name="Basic color"
+                data-dur-min="120" data-dur-max="120"
+                data-price-min="350" data-price-max="350"
+                aria-label="Add Basic color">+</button>
+            </li>
+            <li class="service-tier">
+              <span class="tier-name">Advanced</span><span class="tier-duration">3–4 hours</span>
+              <span class="tier-price">$525–700</span>
+              <button type="button" class="tier-add"
+                data-id="color-advanced" data-square-id="[square-id]" data-name="Advanced color"
+                data-dur-min="180" data-dur-max="240"
+                data-price-min="525" data-price-max="700"
+                aria-label="Add Advanced color">+</button>
+            </li>
+          </ul>
+          <a href="#contact" class="btn-inline service-cta">Inquire →</a>
+        </div>
+      </article>
+
+      <article class="service-card">
+        <div class="service-image">
+          <div class="ph" data-label="add-ons · treatment"></div>
+        </div>
+        <div class="service-content">
+          <p class="service-no">+ Add to any service</p>
+          <h2 class="service-title"><em>Add-ons</em></h2>
+          <ul class="service-tiers">
+            <li class="service-tier">
+              <span class="tier-name">Gloss / toner</span><span class="tier-duration">25 min</span>
+              <span class="tier-price">$175</span>
+              <button type="button" class="tier-add"
+                data-id="addon-gloss" data-square-id="[square-id]" data-name="Gloss / toner"
+                data-dur-min="25" data-dur-max="25"
+                data-price-min="175" data-price-max="175"
+                aria-label="Add Gloss / toner">+</button>
+            </li>
+            <li class="service-tier">
+              <span class="tier-name">Hot tool styling</span><span class="tier-duration">30 min</span>
+              <span class="tier-price">$35</span>
+              <button type="button" class="tier-add"
+                data-id="addon-hot-tool" data-square-id="[square-id]" data-name="Hot tool styling"
+                data-dur-min="30" data-dur-max="30"
+                data-price-min="35" data-price-max="35"
+                aria-label="Add Hot tool styling">+</button>
+            </li>
+            <li class="service-tier">
+              <span class="tier-name">Deep conditioning or shine</span><span class="tier-duration">15 min</span>
+              <span class="tier-price">$40</span>
+              <button type="button" class="tier-add"
+                data-id="addon-conditioning" data-square-id="[square-id]" data-name="Deep conditioning / shine"
+                data-dur-min="15" data-dur-max="15"
+                data-price-min="40" data-price-max="40"
+                aria-label="Add Deep conditioning / shine">+</button>
+            </li>
+          </ul>
+          <a href="#contact" class="btn-inline service-cta">Inquire →</a>
+        </div>
+      </article>
+
+      <article class="service-card">
+        <div class="service-image">
+          <div class="ph" data-label="bridal · event"></div>
+        </div>
+        <div class="service-content">
+          <p class="service-no">No. 03 / Four</p>
+          <h2 class="service-title">Bridal &amp; <em>event</em></h2>
+          <p class="service-price">Coming soon</p>
+        </div>
+      </article>
+
+      <article class="service-card">
+        <div class="service-image">
+          <div class="ph" data-label="editorial · campaign"></div>
+        </div>
+        <div class="service-content">
+          <p class="service-no">No. 04 / Four</p>
+          <h2 class="service-title">Editorial &amp; <em>campaign</em></h2>
+          <p class="service-price">Coming soon</p>
+        </div>
+      </article>
+
+    </div>
+
+  </section>
+
+  <section class="cta" id="contact">
+    <p class="eyebrow" style="color: rgba(250,248,245,0.55); margin-bottom: 1.25rem;">Reservations</p>
+    <h2 class="display">Book when you're <em>ready</em>.</h2>
+    <p>
+      [For editorial inquiries, weddings, or studio bookings, reach out directly. A brief consultation precedes every first visit.]
+    </p>
+    <!-- TODO: revert to https://book.squareup.com/PLACEHOLDER-MERCHANT-ID once Alexandria's Square account is live -->
+    <a href="https://book.squareup.com/appointments/zo3bj4b3x8dtio/location/AQ8QAAS9N67HR/services" target="_blank" rel="noopener" class="btn">Book online →</a>
+      <p class="cta-secondary">or email <a href="mailto:hello@alexandriarose.com">hello@alexandriarose.com</a></p>
+  </section>
+
+</main>
+
+<aside class="booking-bar" aria-label="Selected services">
+  <div class="booking-bar-header">
+    <span class="label">Your Booking</span>
+    <span class="count">0 services</span>
+  </div>
+  <ul class="booking-bar-list" role="list"></ul>
+  <div class="booking-bar-totals">
+    <span class="total-label">Estimated</span>
+    <div class="totals">
+      <div class="time">—</div>
+      <div class="price">—</div>
+    </div>
+  </div>
+  <div class="booking-bar-cta">
+    <!-- TODO: revert to https://book.squareup.com/PLACEHOLDER-MERCHANT-ID once Alexandria's Square account is live -->
+    <a class="book-btn" href="https://book.squareup.com/appointments/zo3bj4b3x8dtio/location/AQ8QAAS9N67HR/services" target="_blank" rel="noopener">Book these services →</a>
+  </div>
+</aside>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <p class="brand">Alexandria Rose</p>
+        <p class="brand-sub">[An editorial hair studio in New York. By appointment, year-round.]</p>
+      </div>
+      <div>
+        <h5>Studio</h5>
+        <ul>
+          <li>[Lower East Side]</li>
+          <li>[New York, NY]</li>
+          <li>[Tues — Sat, by appt.]</li>
+        </ul>
+      </div>
+      <div>
+        <h5>Elsewhere</h5>
+        <ul>
+          <li><a href="mailto:hello@alexandriarose.com">[hello@alexandriarose.com]</a></li>
+          <li><a href="https://instagram.com/" target="_blank" rel="noopener">[@alexandriarose]</a></li>
+          <li><a href="about.html">About</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="legal">
+      <span>[© 2026 Alexandria Rose]</span>
+      <span>[New York]</span>
+    </div>
+  </div>
+</footer>
+
+<script src="theme.js"></script>
+<script src="booking.js"></script>
+</body>
+</html>
