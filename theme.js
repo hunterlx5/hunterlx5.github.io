@@ -3,7 +3,7 @@
   var THEMES = ["cream", "ink", "bone", "bone-alt"];
 
   function applyTheme(theme) {
-    if (THEMES.indexOf(theme) === -1) theme = "cream";
+    if (THEMES.indexOf(theme) === -1) theme = "ink";
     document.documentElement.setAttribute("data-theme", theme);
     document.querySelectorAll(".theme-switch button").forEach(function (btn) {
       btn.setAttribute("aria-pressed", btn.dataset.theme === theme ? "true" : "false");
@@ -11,7 +11,7 @@
   }
 
   function initTheme() {
-    var current = document.documentElement.getAttribute("data-theme") || "cream";
+    var current = document.documentElement.getAttribute("data-theme") || "ink";
     applyTheme(current);
     // Event delegation so buttons inside the mobile menu (cloned) also work.
     document.addEventListener("click", function (e) {
