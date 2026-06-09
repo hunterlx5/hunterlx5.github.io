@@ -1467,3 +1467,66 @@ body.menu-open {
   overflow: hidden;
   touch-action: none;
 }
+
+/* ---- Inline photo uploader ---------------------------------------------- */
+.ph .ph-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.ph.has-image { background: none; }
+.ph.has-image::before,
+.ph.has-image::after { display: none; }
+
+body.edit-mode .ph {
+  cursor: pointer;
+  outline: 2px dashed color-mix(in srgb, var(--accent) 60%, transparent);
+  outline-offset: -2px;
+}
+body.edit-mode .ph:hover { outline: 2px solid var(--accent); }
+
+#upload-bar {
+  position: fixed;
+  left: 0; right: 0; bottom: 0;
+  z-index: 9999;
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  flex-wrap: wrap;
+  padding: 10px 16px;
+  background: var(--ink);
+  color: var(--bg);
+  font-family: var(--sans);
+  font-size: 0.85rem;
+  box-shadow: 0 -2px 16px rgba(0,0,0,0.25);
+}
+#upload-bar .status { flex: 1 1 200px; }
+#upload-bar .status.busy { opacity: 0.7; }
+#upload-bar input {
+  flex: 1 1 200px;
+  min-width: 160px;
+  padding: 7px 9px;
+  border: 1px solid color-mix(in srgb, var(--bg) 40%, transparent);
+  border-radius: 5px;
+  background: color-mix(in srgb, var(--ink) 80%, #000);
+  color: var(--bg);
+  font-family: var(--sans);
+}
+#upload-bar button {
+  padding: 7px 14px;
+  border: 0;
+  border-radius: 5px;
+  cursor: pointer;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-weight: 600;
+  font-size: 0.85rem;
+}
+#upload-bar button.ghost {
+  background: transparent;
+  color: color-mix(in srgb, var(--bg) 70%, transparent);
+}
