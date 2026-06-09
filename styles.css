@@ -1488,6 +1488,34 @@ body.edit-mode .ph {
 }
 body.edit-mode .ph:hover { outline: 2px solid var(--accent); }
 
+.ph .ph-delete { display: none; }
+body.edit-mode .ph.has-image .ph-delete {
+  display: inline-flex;
+  align-items: center;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 5;
+  padding: 6px 12px;
+  border: 0;
+  border-radius: 5px;
+  cursor: pointer;
+  background: var(--ink);
+  color: var(--bg);
+  font-family: var(--sans);
+  font-weight: 600;
+  font-size: 0.72rem;
+  letter-spacing: 0.04em;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+  opacity: 0.92;
+  transition: background 0.2s ease, color 0.2s ease, opacity 0.2s ease;
+}
+body.edit-mode .ph.has-image .ph-delete:hover {
+  background: var(--accent);
+  color: #fff;
+  opacity: 1;
+}
+
 #upload-bar {
   position: fixed;
   left: 0; right: 0; bottom: 0;

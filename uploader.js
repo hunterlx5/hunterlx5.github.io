@@ -56,6 +56,47 @@
     img.src = isBlob ? src : "/" + src + "?t=" + Date.now();
     img.alt = el.dataset.label || "";
     el.classList.add("has-image");
+    refreshDeleteBtn(el);
+  }
+
+  function clearImage(el) {
+    var img = el.querySelector("img.ph-img");
+    if (img) img.remove();
+    el.classList.remove("has-image");
+    refreshDeleteBtn(el);
+  }
+
+  // A small "Delete" control shown over any filled tile while in edit mode.
+  function refreshDeleteBtn(el) {
+    var inEdit = document.body.classList.contains("edit-mode");
+    var existing = el.querySelector(".ph-delete");
+    if (inEdit && el.classList.contains("has-image")) {
+      if (!existing) {
+        var btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = "ph-delete";
+        btn.textContent = "Delete";
+        btn.setAttribute("aria-label", "Delete this photo");
+        btn.onclick = function (e) {
+          e.preventDefault();
+          e.stopPropagation();
+          handleDelete(el).catch(function (err) {
+            setStatus("Error: " + err.message, false);
+            console.error(err);
+          });
+        };
+        el.appendChild(btn);
+      }
+    } else if (existing) {
+      existing.remove();
+    }
+  }
+
+  function removeAllDeleteBtns() {
+    placeholders.forEach(function (el) {
+      var b = el.querySelector(".ph-delete");
+      if (b) b.remove();
+    });
   }
 
   function loadManifest() {
@@ -165,6 +206,32 @@
     });
   }
 
+  function deleteFile(repoPath, sha, message) {
+    return gh("/repos/" + REPO + "/contents/" + repoPath, {
+      method: "DELETE",
+      body: JSON.stringify({ message: message, sha: sha, branch: BRANCH })
+    }).then(function (res) {
+      if (!res.ok) {
+        return res.text().then(function (t) {
+          throw new Error("GitHub " + res.status + ": " + t);
+        });
+      }
+      return res.json();
+    });
+  }
+
+  function removeFromManifest(slot) {
+    return getFileMeta(MANIFEST).then(function (meta) {
+      var obj = meta && meta.content ? decodeB64Json(meta.content) : {};
+      if (!(slot in obj)) { manifest = obj; return; }
+      delete obj[slot];
+      var json = JSON.stringify(obj, null, 2);
+      var b64 = btoa(unescape(encodeURIComponent(json)));
+      return putFile(MANIFEST, b64, "Unmap " + slot, meta && meta.sha)
+        .then(function () { manifest = obj; });
+    });
+  }
+
   function handleFile(el, file) {
     var slot = el.dataset.slot;
     var repoPath = "images/" + slot + ".jpg";
@@ -188,6 +255,30 @@
       .then(function () {
         fillImage(el, previewUrl, true);
         setStatus("Saved ✓  Live on the site in ~30s.", false);
+      });
+  }
+
+  function handleDelete(el) {
+    var slot = el.dataset.slot;
+    var repoPath = manifest[slot] || ("images/" + slot + ".jpg");
+    if (!window.confirm("Delete this photo? The tile will return to a placeholder.")) {
+      return Promise.resolve();
+    }
+    setStatus("Deleting photo…", true);
+    return getFileMeta(repoPath)
+      .then(function (meta) {
+        // If the file is already gone, skip straight to clearing the mapping.
+        if (meta && meta.sha) {
+          return deleteFile(repoPath, meta.sha, "Delete photo for " + slot);
+        }
+      })
+      .then(function () {
+        setStatus("Updating mapping…", true);
+        return removeFromManifest(slot);
+      })
+      .then(function () {
+        clearImage(el);
+        setStatus("Deleted ✓  Live on the site in ~30s.", false);
       });
   }
 
@@ -261,7 +352,7 @@
     bar.innerHTML = "";
     statusEl = document.createElement("span");
     statusEl.className = "status";
-    statusEl.textContent = "Editing — tap any image tile to replace it.";
+    statusEl.textContent = "Editing — tap a tile to replace it, or Delete to remove a photo.";
     var signout = document.createElement("button");
     signout.className = "ghost";
     signout.textContent = "Sign out";
@@ -289,6 +380,8 @@
   // ---- edit mode lifecycle ------------------------------------------------
   function onPhClick(e) {
     if (!document.body.classList.contains("edit-mode")) return;
+    // Clicks on the delete control are handled separately.
+    if (e.target.closest && e.target.closest(".ph-delete")) return;
     e.preventDefault();
     e.stopPropagation();
     var el = e.currentTarget;
@@ -307,10 +400,12 @@
   function activate() {
     document.body.classList.add("edit-mode");
     showEditBar();
+    placeholders.forEach(refreshDeleteBtn);
   }
 
   function exitEditMode() {
     document.body.classList.remove("edit-mode");
+    removeAllDeleteBtns();
     if (bar) { bar.remove(); bar = null; statusEl = null; }
     if (location.hash === "#edit") {
       history.replaceState(null, "", location.pathname + location.search);
