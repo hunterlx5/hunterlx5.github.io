@@ -4,21 +4,13 @@
 
   // ─────────────────────────────────────────────────────────────
   // SQUARE APPOINTMENTS
-  // Currently pointing at a temporary booking URL so the flow works
-  // end-to-end. The temporary URL won't accept service pre-selection
-  // — users land on the booking page and pick services there.
-  //
-  // When Alexandria's own Square Appointments account is ready,
-  // swap SQUARE_BOOKING_URL back to their URL (format will be like
-  // https://book.squareup.com/appointments/<id>/location/<id>) and
-  // wire per-service deep-linking in bookHref() once we know
-  // Square's URL format for pre-selecting services. Selected items'
-  // Square IDs are collected as state.items[].squareId from the
-  // data-square-id attributes on each .tier-add button.
+  // Points at Alexandria's own Square Appointments page. The base URL
+  // doesn't accept service pre-selection — users land on the booking
+  // page and pick services there. Per-service deep-linking can be
+  // wired into bookHref() later using each item's squareId (collected
+  // from the data-square-id attributes on each .tier-add button).
   // ─────────────────────────────────────────────────────────────
-  // Original placeholder — restore when Alexandria's account is live:
-  // var SQUARE_BOOKING_URL = "https://book.squareup.com/PLACEHOLDER-MERCHANT-ID";
-  var SQUARE_BOOKING_URL = "https://book.squareup.com/appointments/zo3bj4b3x8dtio/location/AQ8QAAS9N67HR/services";
+  var SQUARE_BOOKING_URL = "https://book.squareup.com/appointments/gzufysxx46taxu/location/L1Y3ZYDQVQJNZ/services";
 
   var state = { items: [] };
 
