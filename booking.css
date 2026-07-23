@@ -1,0 +1,282 @@
+/* Styles for the on-site booking checkout (time → details → deposit).
+   Used by services.html via booking-services.js (corner-widget cart). */
+
+.bk-checkout { max-width: 720px; }
+
+/* ===== Inverted corner widget (book-services-corner.html) =====
+   The widget flips the theme's ink/cream so it stands out from the page.
+   Descendants read these vars, so the whole widget inverts automatically. */
+.booking-bar {
+  --bg: #17150f;
+  --bg-elev: #232019;
+  --ink: #f7f3ea;
+  --ink-soft: #cbc3b2;
+  --muted: #9a917f;
+  --rule: #3a352b;
+  --accent: #d8a978;
+  color: var(--ink);
+  overflow: hidden; /* clip instead of letting checkout content spill past */
+}
+[data-theme="ink"] .booking-bar {
+  --bg: #faf8f5;
+  --bg-elev: #efeae1;
+  --ink: #17150f;
+  --ink-soft: #4a453e;
+  --muted: #8a8175;
+  --rule: #d8d1c4;
+  --accent: #7a4a34;
+}
+.booking-bar .bk-error { color: #ef8f8f; }
+
+/* ===== Calendar date picker (corner widget) ===== */
+.bk-cal-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.85rem; }
+.bk-cal-title { font-family: var(--serif); font-weight: 400; font-size: 1.2rem; }
+.bk-cal-nav {
+  width: 2rem; height: 2rem; border: 1px solid var(--rule); background: var(--bg-elev);
+  color: var(--ink); border-radius: 8px; cursor: pointer; display: inline-flex;
+  align-items: center; justify-content: center; font-size: 1rem; line-height: 1;
+}
+.bk-cal-nav:hover:not(:disabled) { border-color: var(--ink-soft); }
+.bk-cal-nav:disabled { opacity: 0.3; cursor: default; }
+.bk-cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 1px; }
+.bk-cal-dow { text-align: center; font-size: 0.6rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); padding: 0.35rem 0 0.5rem; }
+.bk-cal-day {
+  aspect-ratio: 1 / 1; display: flex; align-items: center; justify-content: center;
+  font-size: 0.9rem; border: none; background: none; color: var(--muted);
+  cursor: default; border-radius: 8px; font-family: var(--sans); padding: 0;
+}
+.bk-cal-day.is-avail { color: var(--ink); font-weight: 500; cursor: pointer; }
+.bk-cal-day.is-avail:hover { background: var(--ink-soft); color: var(--bg); }
+.bk-cal-day.is-today { box-shadow: inset 0 0 0 1px var(--rule); }
+.bk-cal-day.is-selected { background: var(--ink); color: var(--bg); box-shadow: none; }
+.bk-cal-empty { visibility: hidden; }
+.bk-tz { text-align: center; font-size: 0.8rem; color: var(--muted); margin: 0.9rem 0 1.3rem; padding-top: 0.9rem; border-top: 1px solid var(--rule); }
+.bk-tz b { color: var(--ink-soft); }
+
+.bk-daytime-date { font-family: var(--serif); font-size: 1.2rem; margin-bottom: 1rem; }
+.bk-daypart { margin-bottom: 1.1rem; }
+.bk-daypart h4 { font-size: 0.66rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted); font-weight: 600; margin-bottom: 0.5rem; }
+.bk-daypart .bk-none { color: var(--muted); font-size: 0.88rem; }
+
+/* modal (multi-service checkout) */
+.bk-modal-overlay {
+  position: fixed; inset: 0; z-index: 60; display: none;
+  align-items: flex-start; justify-content: center;
+  padding: clamp(1rem, 4vw, 3rem) 1rem;
+  background: color-mix(in srgb, #000 55%, transparent);
+  backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);
+  overflow-y: auto;
+}
+.bk-modal-overlay.is-open { display: flex; }
+.bk-modal {
+  position: relative; width: min(680px, 100%); margin: auto;
+  background: var(--bg); border: 1px solid var(--rule);
+  padding: clamp(1.75rem, 4vw, 3rem);
+  box-shadow: 0 24px 80px rgba(0,0,0,0.35);
+  animation: bk-modal-in 0.35s cubic-bezier(0.2,0.7,0.2,1);
+}
+@keyframes bk-modal-in { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: none; } }
+.bk-modal-close {
+  position: absolute; top: 0.9rem; right: 1rem; z-index: 1;
+  background: none; border: none; color: var(--muted); cursor: pointer;
+  font-size: 1.5rem; line-height: 1; padding: 0.25rem 0.5rem;
+}
+.bk-modal-close:hover { color: var(--ink); }
+body.bk-modal-open { overflow: hidden; }
+
+/* progress */
+.bk-progress {
+  display: flex; flex-wrap: wrap; gap: 0.4rem 1.4rem; list-style: none;
+  margin: 0 0 2rem; padding: 0 0 1.4rem; border-bottom: 1px solid var(--rule);
+}
+.bk-progress li {
+  font-size: 0.66rem; letter-spacing: 0.22em; text-transform: uppercase;
+  color: var(--muted); font-weight: 500; display: flex; align-items: center; gap: 0.5rem;
+}
+.bk-progress li::before {
+  content: attr(data-num); display: inline-flex; align-items: center; justify-content: center;
+  width: 1.4rem; height: 1.4rem; border: 1px solid var(--rule); border-radius: 50%; font-size: 0.66rem; letter-spacing: 0;
+}
+.bk-progress li.is-current { color: var(--ink); }
+.bk-progress li.is-current::before { border-color: var(--ink); color: var(--ink); }
+.bk-progress li.is-done { color: var(--ink-soft); }
+.bk-progress li.is-done::before { content: "✓"; background: var(--ink); color: var(--bg); border-color: var(--ink); }
+
+/* steps */
+.bk-step { display: none; }
+.bk-step.is-active { display: block; }
+.bk-step-head { display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; margin-bottom: 1.25rem; flex-wrap: wrap; }
+.bk-step-head h2 { font-size: clamp(1.5rem, 3vw, 2.1rem); }
+
+/* accumulating summary card (service + date) shown atop time & details steps */
+.bk-recap-card { border: 1px solid var(--rule); background: var(--bg-elev); padding: 1rem 1.15rem; margin-bottom: 1.4rem; }
+.bk-recap-card .bk-recap-services { font-family: var(--serif); font-weight: 400; font-size: 1.35rem; line-height: 1.15; }
+.bk-recap-card .bk-recap-meta { font-size: 0.85rem; color: var(--ink-soft); margin-top: 0.4rem; }
+.bk-recap-card .bk-recap-when { font-size: 0.92rem; color: var(--ink); margin-top: 0.6rem; padding-top: 0.6rem; border-top: 1px solid var(--rule); }
+.bk-recap-card .bk-recap-when b { font-weight: 500; }
+
+/* dates & times */
+.bk-dates { display: flex; flex-direction: column; gap: 0.5rem; margin-bottom: 1.75rem; }
+.bk-date {
+  display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+  background: var(--bg); border: 1px solid var(--rule); padding: 0.9rem 1.2rem;
+  cursor: pointer; font: inherit; color: inherit; transition: border-color 0.2s ease, background 0.2s ease;
+}
+.bk-date:hover { border-color: var(--ink-soft); }
+.bk-date.is-selected { border-color: var(--ink); background: var(--bg-elev); }
+.bk-date-day { font-family: var(--serif); font-size: 1.1rem; }
+.bk-date-n { font-size: 0.7rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); }
+.bk-times { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+.bk-time {
+  background: var(--bg); border: 1px solid var(--rule); padding: 0.7rem 1.1rem;
+  cursor: pointer; font: inherit; color: inherit; font-size: 0.9rem; transition: border-color 0.2s ease, background 0.2s ease;
+}
+.bk-time:hover { border-color: var(--ink); background: var(--bg-elev); }
+.bk-time.is-selected { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+
+/* form */
+.bk-form { display: grid; grid-template-columns: 1fr 1fr; gap: 1.1rem; max-width: 560px; }
+.bk-field { display: flex; flex-direction: column; gap: 0.4rem; min-width: 0; }
+.bk-field.full { grid-column: 1 / -1; }
+.bk-field label { font-size: 0.68rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); }
+.bk-field input, .bk-field textarea {
+  width: 100%; box-sizing: border-box;
+  background: var(--bg); border: 1px solid var(--rule); color: var(--ink);
+  padding: 0.8rem 0.9rem; font: inherit; font-size: 0.95rem; border-radius: 0;
+}
+.bk-field input:focus, .bk-field textarea:focus { outline: 1px solid var(--ink); border-color: var(--ink); }
+.bk-field textarea { resize: vertical; min-height: 4.5rem; }
+
+/* summary + payment */
+.bk-summary { border: 1px solid var(--rule); padding: 1.4rem 1.5rem; margin-bottom: 1.75rem; max-width: 560px; }
+.bk-summary dl { display: grid; grid-template-columns: 1fr auto; gap: 0.55rem 1.5rem; margin: 0; }
+.bk-summary dt { color: var(--muted); font-size: 0.78rem; letter-spacing: 0.1em; text-transform: uppercase; align-self: center; }
+.bk-summary dd { margin: 0; text-align: right; }
+.bk-summary .bk-total dt, .bk-summary .bk-total dd { color: var(--ink); font-weight: 500; border-top: 1px solid var(--rule); padding-top: 0.6rem; margin-top: 0.3rem; }
+#bk-card { max-width: 560px; margin: 0.5rem 0 1.5rem; min-height: 90px; }
+
+.bk-btn {
+  display: inline-flex; align-items: center; gap: 0.75rem; padding: 1rem 1.75rem;
+  border: 1px solid currentColor; background: var(--ink); color: var(--bg);
+  font-size: 0.74rem; letter-spacing: 0.28em; text-transform: uppercase; font-weight: 500;
+  cursor: pointer; font-family: var(--sans); transition: opacity 0.25s ease;
+}
+.bk-btn:hover { opacity: 0.88; }
+.bk-btn:disabled { opacity: 0.5; cursor: default; }
+.bk-back {
+  background: none; border: none; color: var(--muted); cursor: pointer; font: inherit;
+  font-size: 0.72rem; letter-spacing: 0.18em; text-transform: uppercase; padding: 0.5rem 0;
+}
+.bk-back:hover { color: var(--ink); }
+.bk-actions { display: flex; flex-direction: row-reverse; align-items: center; justify-content: space-between; gap: 1rem; margin-top: 0.5rem; flex-wrap: wrap; }
+.bk-field input.is-invalid, .bk-field textarea.is-invalid { border-color: #e06666; outline: none; }
+.bk-field label { display: flex; align-items: baseline; gap: 0.5rem; }
+.bk-field-err { color: #e06666; text-transform: none; letter-spacing: 0; font-size: 0.72rem; font-weight: 400; }
+
+/* corner-widget checkout (book-services-corner.html) — the booking-bar
+   expands in place to hold the whole flow instead of opening a modal. */
+/* Keep the collapsed cart the same width as the expanded checkout so the
+   widget doesn't resize horizontally when you open it. */
+.booking-bar:has(#bb-checkout) { width: min(460px, calc(100vw - 2rem)); }
+.booking-bar.is-checkout {
+  width: min(460px, calc(100vw - 2rem));
+  height: 88vh; /* definite height so the body can scroll & head/foot pin */
+  max-height: 88vh;
+}
+.bb-checkout { display: flex; flex: 1 1 auto; flex-direction: column; min-height: 0; overflow: hidden; }
+.bb-checkout[hidden] { display: none; }
+.bb-checkout-head { flex: none; padding: 1.25rem 1.25rem 0; }
+.bb-checkout-head .bk-progress { margin: 0; padding-bottom: 1rem; gap: 0.3rem 0.9rem; }
+.bb-checkout-body { flex: 1 1 auto; padding: 1.4rem 1.25rem; overflow-y: auto; min-height: 0; }
+/* Keep the service recap card pinned at the top of the scroll area so what
+   you're booking stays visible while the calendar/times scroll. */
+.bb-checkout-body .bk-recap-card { position: sticky; top: 0; z-index: 2; }
+.bb-checkout-body .bk-step-head { flex-direction: column; gap: 0.35rem; }
+.bb-checkout-body .bk-step-head h2 { font-size: clamp(1.35rem, 5vw, 1.7rem); }
+.bb-checkout-body .bk-summary { padding: 1.1rem 1.2rem; }
+
+/* Fixed footer bar of the corner widget: head (fixed) → body (scroll) → foot
+   (fixed). The per-step action row lives here so it stays pinned. */
+.bb-checkout-foot { flex: none; border-top: 1px solid var(--rule); background: var(--bg); }
+.bk-foot { display: none; padding: 0.85rem 1.25rem; }
+.bk-foot.is-active { display: flex; flex-direction: row-reverse; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
+.bb-cart-note { font-size: 0.76rem; line-height: 1.45; color: var(--muted); text-align: center; margin: 0.15rem 0 0.85rem; }
+/* Inset the CTA button to align with the list/totals (avoids the full-bleed
+   subpixel/border mismatch that left a 1px gap on one side). */
+.booking-bar-cta { padding: 0 1.25rem 1.25rem; }
+
+/* Cart minimize control (expanded) + the compact minimized bar */
+.bb-min[hidden] { display: none; } /* [hidden] must win over display:flex */
+.bb-cart-top { display: flex; justify-content: flex-end; padding: 0.55rem 0.7rem 0; }
+.bb-toggle { background: none; border: none; color: var(--muted); font: inherit; font-size: 0.68rem; letter-spacing: 0.16em; text-transform: uppercase; cursor: pointer; padding: 0.3rem 0.45rem; }
+.bb-toggle:hover { color: var(--ink); }
+.bb-min { display: flex; align-items: center; justify-content: space-between; gap: 1rem; width: 100%; padding: 1rem 1.25rem; background: none; border: none; color: inherit; font: inherit; cursor: pointer; text-align: left; }
+.bb-min-label { font-family: var(--serif); font-size: 1.05rem; color: var(--ink); }
+.bb-min-label b { font-weight: 500; }
+.bb-min-caret { font-size: 0.66rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted); white-space: nowrap; }
+.bb-min:hover .bb-min-caret { color: var(--ink); }
+
+.bk-loading { color: var(--muted); font-family: var(--serif); font-style: italic; }
+.bk-error { color: #b23; font-size: 0.9rem; margin-top: 1rem; }
+[data-theme="ink"] .bk-error { color: #e88; }
+.bk-note { color: var(--muted); font-size: 0.85rem; margin-top: 1rem; }
+.bk-confirm-icon { font-size: 2.5rem; color: var(--accent); }
+
+@media (max-width: 560px) { .bk-form { grid-template-columns: 1fr; } }
+
+/* Phone tweaks for the corner widget: keep Back/Next side by side (short labels
+   fit fine) and collapse the progress row to numbered circles — the labels don't
+   fit four-across on a phone, so only the current step keeps its label. */
+@media (max-width: 500px) {
+  .bb-checkout-head .bk-progress { flex-wrap: nowrap; justify-content: space-between; gap: 0.5rem; }
+  .bk-progress li { font-size: 0; gap: 0.4rem; }
+  .bk-progress li::before { width: 1.3rem; height: 1.3rem; font-size: 0.64rem; }
+  .bk-progress li.is-current { font-size: 0.6rem; letter-spacing: 0.1em; }
+}
+
+/* Reveal the time slots when a day is picked — offset clears the sticky recap
+   card so the date heading isn't hidden behind it. */
+#bk-daytimes { scroll-margin-top: 6rem; }
+
+/* Phone layout for the expanded checkout: fill the screen BELOW the site header
+   using explicit insets (avoids 100vh URL-bar overshoot that clipped the footer
+   or let the header overlap the stepper). Tighter side padding gives the
+   calendar bigger, tappable day cells. And when the cart is active, add bottom
+   room to <main> so the floating widget doesn't hide the last services. */
+@media (max-width: 640px) {
+  .booking-bar.is-checkout {
+    top: 4.75rem; left: 0.75rem; right: 0.75rem; bottom: 0.75rem;
+    width: auto; height: auto; max-height: none;
+  }
+  .bb-checkout-head, .bk-foot { padding-left: 0.95rem; padding-right: 0.95rem; }
+  .bb-checkout-body { padding-left: 0.95rem; padding-right: 0.95rem; }
+  .bb-cart-note { margin-left: 0.95rem; margin-right: 0.95rem; }
+}
+
+/* ===== Catalog skeleton (services.html, until the live catalog loads) =====
+   Keeps the grid's shape so the page doesn't collapse to a bare loading line. */
+.bk-sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
+.service-card.is-skeleton { pointer-events: none; }
+.service-card.is-skeleton .ph { opacity: 0.5; }
+.sk { display: block; background: var(--rule); border-radius: 3px; position: relative; overflow: hidden; }
+.sk::after { content: ""; position: absolute; inset: 0; transform: translateX(-100%); background: linear-gradient(90deg, transparent, rgba(128, 128, 128, 0.18), transparent); animation: sk-shimmer 1.4s ease-in-out infinite; }
+@keyframes sk-shimmer { 100% { transform: translateX(100%); } }
+.sk-no { height: 0.85rem; width: 32%; }
+.sk-title { height: clamp(2.2rem, 4.5vw, 3.4rem); width: 62%; }
+.sk-row { height: 1.05rem; width: 100%; }
+
+/* Desktop: the checkout panel is a fixed 88vh column, so the square calendar
+   cells + generous margins push the time slots out of view. Flatten the cells
+   and tighten Step-2 spacing so the recap, calendar, and first times all fit
+   without scrolling. (Phones use the full-screen layout below, untouched.) */
+@media (min-width: 641px) {
+  .bb-checkout-body { padding-top: 1.1rem; padding-bottom: 1.1rem; }
+  .bb-checkout-body .bk-step-head { margin-bottom: 0.85rem; }
+  .bb-checkout-body .bk-recap-card { margin-bottom: 0.9rem; padding: 0.75rem 1rem; }
+  .booking-bar .bk-cal-head { margin-bottom: 0.6rem; }
+  .booking-bar .bk-cal-day { aspect-ratio: auto; height: 2.3rem; }
+  .booking-bar .bk-cal-dow { padding: 0.2rem 0 0.35rem; }
+  .booking-bar .bk-tz { margin: 0.75rem 0 0.9rem; padding-top: 0.75rem; }
+  .booking-bar .bk-daytime-date { margin-bottom: 0.7rem; }
+  .booking-bar .bk-daypart { margin-bottom: 0.85rem; }
+}

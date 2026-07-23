@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Services — Alexandria Rose</title>
+  <meta name="description" content="The work — haircuts, color, bridal, editorial." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;1,9..144,300&family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500&display=swap">
+  <script>
+    (function () {
+      try {
+        var t = localStorage.getItem("ar-theme");
+        if (!t) t = "ink";
+        document.documentElement.setAttribute("data-theme", t);
+      } catch (e) {
+        document.documentElement.setAttribute("data-theme", "ink");
+      }
+    })();
+  </script>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="booking.css?v=14" />
+</head>
+<body>
+
+<header class="site-header">
+  <nav class="nav" aria-label="Primary">
+    <a href="index.html" class="wordmark">Alexandria Rose</a>
+    <div class="nav-right">
+      <ul class="nav-links">
+        <li><a href="portfolio.html">Portfolio</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="services.html" aria-current="page">Services</a></li>
+        <li><a href="new-clients.html">New Clients</a></li>
+        <li><a href="faq.html">FAQ</a></li>
+        <li><a href="book.html">Book</a></li>
+      </ul>
+      <div class="theme-switch" role="group" aria-label="Theme">
+        <button type="button" data-theme="cream" aria-label="Cream theme" title="Cream"></button>
+        <button type="button" data-theme="ink" aria-label="Ink theme" title="Ink"></button>
+        <button type="button" data-theme="bone" aria-label="Bone theme" title="Bone"></button>
+        <button type="button" data-theme="bone-alt" aria-label="Bone alt theme" title="Bone · Instrument"></button>
+      </div>
+    </div>
+  </nav>
+</header>
+
+<main>
+
+  <section class="container">
+    <div class="page-intro">
+      <div>
+        <p class="eyebrow">The Work</p>
+        <h1 class="display" style="font-size: clamp(2.75rem, 7vw, 5.5rem); margin-top: 1rem;">
+          The <em>work</em>,<br />in full.
+        </h1>
+      </div>
+      <p class="lede">
+        Services are customized; pricing reflects time, product, and the plan to maintain your hair. Add what you'd like to build your appointment — a 20% deposit holds your spot, with the balance due at your visit.
+      </p>
+    </div>
+
+    <!-- Skeleton cards hold the grid's shape until booking-services.js swaps in
+         the live catalog, so the page never collapses to a bare loading line. -->
+    <div class="services-grid" id="bk-catalog">
+      <p class="bk-sr-only" role="status">Loading services…</p>
+      <article class="service-card is-skeleton" aria-hidden="true"><div class="service-image"><div class="ph"></div></div><div class="service-content"><span class="sk sk-no"></span><span class="sk sk-title"></span><span class="sk sk-row"></span><span class="sk sk-row"></span><span class="sk sk-row"></span></div></article>
+      <article class="service-card is-skeleton" aria-hidden="true"><div class="service-image"><div class="ph"></div></div><div class="service-content"><span class="sk sk-no"></span><span class="sk sk-title"></span><span class="sk sk-row"></span><span class="sk sk-row"></span><span class="sk sk-row"></span></div></article>
+      <article class="service-card is-skeleton" aria-hidden="true"><div class="service-image"><div class="ph"></div></div><div class="service-content"><span class="sk sk-no"></span><span class="sk sk-title"></span><span class="sk sk-row"></span><span class="sk sk-row"></span></div></article>
+      <article class="service-card is-skeleton" aria-hidden="true"><div class="service-image"><div class="ph"></div></div><div class="service-content"><span class="sk sk-no"></span><span class="sk sk-title"></span><span class="sk sk-row"></span><span class="sk sk-row"></span></div></article>
+    </div>
+
+
+  </section>
+
+  <section class="cta" id="contact">
+    <p class="eyebrow" style="color: rgba(250,248,245,0.55); margin-bottom: 1.25rem;">Reservations</p>
+    <h2 class="display">Book when you're <em>ready</em>.</h2>
+    <p>
+      For editorial inquiries, weddings, or studio bookings, reach out directly. A brief consultation precedes every first visit.
+    </p>
+    <a href="book.html" class="btn">Book online →</a>
+      <p class="cta-secondary">or email <a href="mailto:alexandria@alexandriarose.org">alexandria@alexandriarose.org</a></p>
+  </section>
+
+</main>
+
+<!-- Corner widget: cart + inline checkout (driven by booking-services.js) -->
+<aside class="booking-bar" aria-label="Your booking">
+
+  <!-- Cart view (expanded) -->
+  <div id="bb-cart">
+    <div class="bb-cart-top">
+      <button type="button" class="bb-toggle" id="bb-minimize" aria-label="Minimize">Hide ▾</button>
+    </div>
+    <ul class="booking-bar-list" role="list"></ul>
+    <div class="booking-bar-totals">
+      <span class="total-label">Estimated</span>
+      <div class="totals">
+        <div class="time">—</div>
+        <div class="price">—</div>
+      </div>
+    </div>
+    <div class="booking-bar-cta">
+      <p class="bb-cart-note">Add as many services as you’d like for this appointment.</p>
+      <button type="button" class="book-btn" id="bk-book-btn">Book these services →</button>
+    </div>
+  </div>
+
+  <!-- Cart view (minimized) — tap to expand -->
+  <button type="button" class="bb-min" id="bb-min" hidden>
+    <span class="bb-min-label"><b id="bb-min-count">0 services</b> · <span id="bb-min-total">—</span></span>
+    <span class="bb-min-caret" aria-hidden="true">Show ▴</span>
+  </button>
+
+  <!-- Checkout view (in-place) -->
+  <div id="bb-checkout" class="bb-checkout" hidden>
+    <!-- Fixed header: the step progress, pinned like the footer -->
+    <div class="bb-checkout-head">
+      <ol class="bk-progress">
+        <li data-step="1" data-num="1" class="is-done">Services</li>
+        <li data-step="2" data-num="2" class="is-current">Time</li>
+        <li data-step="3" data-num="3">Details</li>
+        <li data-step="4" data-num="4">Deposit</li>
+      </ol>
+    </div>
+    <div class="bb-checkout-body">
+
+      <!-- Step 2: time -->
+      <section class="bk-step is-active" data-step="2">
+        <div class="bk-recap-card" id="bk-time-summary"></div>
+        <div class="bk-cal" id="bk-cal"></div>
+        <p class="bk-tz" id="bk-tz" hidden>Times are shown in <b>PT</b>.</p>
+        <div class="bk-daytimes" id="bk-daytimes"></div>
+        <div class="bk-error" hidden></div>
+      </section>
+
+      <!-- Step 3: details -->
+      <section class="bk-step" data-step="3">
+        <div class="bk-recap-card" id="bk-details-summary"></div>
+        <form class="bk-form" id="bk-details-form" novalidate>
+          <div class="bk-field"><label>First name <span class="bk-field-err" data-err="first"></span></label><input name="first" autocomplete="given-name" required></div>
+          <div class="bk-field"><label>Last name</label><input name="last" autocomplete="family-name"></div>
+          <div class="bk-field full"><label>Email <span class="bk-field-err" data-err="email"></span></label><input name="email" type="email" autocomplete="email" required></div>
+          <div class="bk-field full"><label>Phone <span class="bk-field-err" data-err="phone"></span></label><input name="phone" type="tel" autocomplete="tel" required></div>
+          <div class="bk-field full"><label>Anything I should know? (optional)</label><textarea name="note"></textarea></div>
+        </form>
+      </section>
+
+      <!-- Step 4: deposit -->
+      <section class="bk-step" data-step="4">
+        <div class="bk-recap-card" id="bk-pay-summary"></div>
+        <div class="bk-summary">
+          <dl>
+            <div id="bk-sum-list" style="display:contents"></div>
+            <dt>Total</dt><dd id="bk-sum-price"></dd>
+            <dt>Balance at visit</dt><dd id="bk-sum-balance"></dd>
+            <div class="bk-total" style="display:contents"><dt>Deposit due now</dt><dd id="bk-sum-deposit"></dd></div>
+          </dl>
+        </div>
+        <p class="bk-field" style="margin-bottom:0"><span style="font-size:0.68rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--muted)">Card details</span></p>
+        <div id="bk-card"></div>
+        <p class="bk-note">Your card is charged the deposit now; the balance is due at your appointment. Secured by Square.</p>
+        <div class="bk-error" hidden></div>
+      </section>
+
+      <!-- Step 5: confirmation -->
+      <section class="bk-step" data-step="5">
+        <p class="bk-confirm-icon">✓</p>
+        <h2 class="display" style="font-size:clamp(1.6rem,5vw,2rem);margin:0.5rem 0 1rem">You’re booked.</h2>
+        <p class="lede" style="font-size:1.05rem"><b id="bk-conf-services"></b> — <span id="bk-conf-when"></span>.</p>
+        <p class="bk-note">A confirmation is on its way to <b id="bk-conf-email"></b>. Need to change anything? Just reply to that email.</p>
+        <p style="margin-top:1.75rem"><button type="button" class="bk-btn" id="bk-done-btn">Done</button></p>
+      </section>
+    </div>
+
+    <!-- Fixed footer: per-step action row, pinned to the widget bottom -->
+    <div class="bb-checkout-foot" id="bb-foot">
+      <div class="bk-foot" data-foot="2">
+        <button type="button" class="bk-btn" id="bk-time-next" disabled>Next →</button>
+        <button type="button" class="bk-back" id="bk-edit-services">← Back</button>
+      </div>
+      <div class="bk-foot" data-foot="3">
+        <button type="button" class="bk-btn" id="bk-details-next">Next →</button>
+        <button type="button" class="bk-back" data-back="2">← Back</button>
+      </div>
+      <div class="bk-foot" data-foot="4">
+        <button type="button" class="bk-btn" id="bk-pay-btn">Pay deposit &amp; book</button>
+        <button type="button" class="bk-back" data-back="3">← Back</button>
+      </div>
+    </div>
+  </div>
+</aside>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <p class="brand">Alexandria Rose</p>
+        <p class="brand-sub">An editorial hair studio in New York. By appointment, year-round.</p>
+      </div>
+      <div>
+        <h5>Locations</h5>
+        <ul>
+          <li>New York, NY</li>
+          <li>Wed — Sun, by appt.</li>
+          <li>San Francisco, CA</li>
+          <li>By appt only</li>
+        </ul>
+      </div>
+      <div>
+        <h5>Elsewhere</h5>
+        <ul>
+          <li><a href="mailto:alexandria@alexandriarose.org">alexandria@alexandriarose.org</a></li>
+          <li><a href="https://instagram.com/alexandriarosehair" target="_blank" rel="noopener">@alexandriarosehair</a></li>
+          <li><a href="about.html">About</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="legal">
+      <span>© 2026 Alexandria Rose</span>
+      <span>New York</span>
+    </div>
+  </div>
+</footer>
+
+<!-- Square Web Payments SDK is loaded dynamically by booking-services.js so it
+     can pick the sandbox vs production build based on the ?sandbox flag. -->
+<script src="booking-services.js?v=3"></script>
+<script src="theme.js"></script>
+</body>
+</html>
