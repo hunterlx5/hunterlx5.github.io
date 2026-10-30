@@ -277,7 +277,7 @@ h3.display { font-size: clamp(1.5rem, 3vw, 2.25rem); line-height: 1.1; }
   display: grid;
   grid-template-columns: 1fr;
   gap: clamp(2rem, 5vw, 4rem);
-  align-items: end;
+  align-items: center;
 }
 
 @media (min-width: 900px) {
@@ -305,6 +305,79 @@ h3.display { font-size: clamp(1.5rem, 3vw, 2.25rem); line-height: 1.1; }
   aspect-ratio: 3 / 4;
   width: 100%;
 }
+
+/* Homepage sections separated by spacing alone. */
+.content-section.content-section--open { border-top: none; }
+
+/* Homepage hero: photo fills the hero, text overlaid on a soft gradient. */
+.hero--overlay {
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  min-height: clamp(560px, 88vh, 960px);
+  padding: 0;
+  overflow: hidden;
+}
+
+.hero--overlay .hero-image {
+  position: absolute;
+  inset: 0;
+  aspect-ratio: auto;
+}
+
+.hero--overlay .ph-img { object-position: 50% 30%; }
+
+.hero--overlay .hero-image.has-image::after {
+  display: block;
+  content: "";
+  inset: 0;
+  opacity: 1;
+  background: linear-gradient(0deg, rgba(10, 8, 7, 0.82) 0%, rgba(10, 8, 7, 0.45) 45%, rgba(10, 8, 7, 0) 75%);
+}
+
+.hero--overlay .container {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+}
+
+.hero--overlay .hero-text {
+  padding: clamp(2.5rem, 6vw, 5rem) 0;
+  max-width: 36rem;
+  color: #f5f1ea;
+}
+
+.hero--overlay .lede {
+  margin-top: 1.5rem;
+  color: rgba(245, 241, 234, 0.86);
+}
+
+@media (min-width: 900px) {
+  .hero--overlay .hero-image.has-image::after {
+    background: linear-gradient(90deg, rgba(10, 8, 7, 0.78) 0%, rgba(10, 8, 7, 0.5) 38%, rgba(10, 8, 7, 0) 62%);
+  }
+
+  .hero--overlay { align-items: center; }
+}
+
+/* Homepage: text anchored lower left, gradient rising from that corner. */
+@media (min-width: 900px) {
+  .hero--overlay.hero--low { align-items: flex-end; }
+
+  .hero--low .hero-text { padding: 0 0 var(--pad-x); }
+
+  .hero--low .hero-image.has-image::after {
+    background: linear-gradient(to top right, rgba(10, 8, 7, 0.82) 0%, rgba(10, 8, 7, 0.5) 35%, rgba(10, 8, 7, 0) 62%);
+  }
+}
+
+/* Homepage: in-page nav. Smooth scrolling unless reduced motion is requested,
+   and section headings clear the sticky header. */
+@media (prefers-reduced-motion: no-preference) {
+  html:has(.hero--low) { scroll-behavior: smooth; }
+}
+
+.hero--low ~ section[id] { scroll-margin-top: 4.5rem; }
 
 /* ───────── Image placeholders ───────── */
 .ph {
@@ -417,6 +490,254 @@ h3.display { font-size: clamp(1.5rem, 3vw, 2.25rem); line-height: 1.1; }
 
 .manifesto blockquote::before { content: "\201C"; margin-right: 0.05em; }
 .manifesto blockquote::after { content: "\201D"; margin-left: 0.05em; }
+
+/* ───────── Services menu (homepage) ───────── */
+/* Same columns as .menu-grid. */
+.menu-head {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem clamp(2rem, 4vw, 3.5rem);
+  align-items: end;
+}
+
+@media (min-width: 700px) {
+  .menu-head { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (min-width: 1050px) {
+  .menu-head { grid-template-columns: repeat(3, 1fr); }
+}
+
+.menu-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: clamp(2.5rem, 5vw, 3.5rem) clamp(2rem, 4vw, 3.5rem);
+  margin-top: clamp(3rem, 6vw, 4.5rem);
+}
+
+@media (min-width: 700px) {
+  .menu-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (min-width: 1050px) {
+  .menu-grid { grid-template-columns: repeat(3, 1fr); }
+}
+
+.menu-group .eyebrow {
+  color: var(--ink);
+  padding-bottom: 1rem;
+  margin-bottom: 0.75rem;
+  border-bottom: 1px solid var(--rule);
+}
+
+.menu-group .menu-extra { margin-top: 2rem; }
+
+.menu-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.menu-list li {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: start;
+  gap: 1rem;
+  padding: 0.55rem 0;
+  line-height: 1.5;
+}
+
+.menu-list .menu-name {
+  color: var(--ink);
+  font-size: 1.02rem;
+  font-weight: 400;
+}
+
+.menu-list .menu-time {
+  color: var(--muted);
+  font-size: 0.88rem;
+  line-height: 1.4;
+}
+
+.menu-list .menu-price {
+  color: var(--ink-soft);
+  font-size: 1.02rem;
+  text-align: right;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Homepage: caps names, bare prices as the anchor of each row. */
+.menu--refined .menu-list li { align-items: first baseline; }
+
+.menu--refined .menu-list .menu-name {
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 0.9rem;
+}
+
+.menu--refined .menu-list .menu-time {
+  letter-spacing: 0.04em;
+}
+
+.menu--refined .menu-list .menu-price {
+  color: var(--ink);
+  font-weight: 500;
+}
+
+/* Homepage: name left; duration then price on the right, all on one baseline. */
+.menu--inline .menu-list li {
+  grid-template-columns: 1fr auto minmax(2.6rem, max-content);
+  align-items: baseline;
+  gap: 0.75rem;
+}
+
+.menu--inline .menu-list .menu-name { letter-spacing: 0.06em; }
+
+
+.menu--inline .menu-list .menu-price { font-size: 1.2rem; }
+
+/* Color prices are starting points: a lighter "+" after the number. */
+.menu--inline .menu-plus {
+  font-weight: 400;
+  color: var(--ink-soft);
+  margin-left: 0.05em;
+}
+
+/* In three columns the "+" hangs into the column gap, so it takes no width from
+   the names and the digits line up with the other columns. */
+@media (min-width: 1040px) {
+  .menu--inline .menu-price { position: relative; }
+  .menu--inline .menu-plus { position: absolute; left: 100%; }
+}
+
+.menu--inline .menu-list .menu-time { font-weight: 400; }
+
+/* Columns: 1 below 760px, 2 from 760px, 3 from 1040px, with doubled column gaps.
+   Below 1280px the doubled gaps leave narrower columns, so rows use slightly
+   tighter name spacing there to keep the longest names on one line. */
+@media (min-width: 700px) and (max-width: 759px) {
+  .menu--inline .menu-grid { grid-template-columns: 1fr; }
+}
+
+@media (min-width: 760px) and (max-width: 1039px) {
+  .menu--inline .menu-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (min-width: 1040px) {
+  .menu--inline .menu-grid {
+    grid-template-columns: repeat(3, 1fr);
+    column-gap: clamp(4rem, 8vw, 7rem);
+  }
+}
+
+@media (min-width: 1040px) and (max-width: 1199px) {
+  .menu--inline .menu-grid { column-gap: 3rem; }
+}
+
+@media (min-width: 1040px) and (max-width: 1279px) {
+  .menu--inline .menu-list li { gap: 0.5rem; grid-template-columns: 1fr auto minmax(2.4rem, max-content); }
+  .menu--inline .menu-list .menu-name { letter-spacing: 0.03em; font-size: 0.84rem; }
+}
+
+/* ───────── Location tiles (homepage) ───────── */
+    .location-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1px;
+  background: var(--rule);
+  border-top: 1px solid var(--rule);
+  border-bottom: 1px solid var(--rule);
+}
+.location-tile {
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  min-height: clamp(420px, 72vh, 760px);
+  overflow: hidden;
+  background: var(--bg-elev);
+  isolation: isolate;
+}
+.location-media {
+  position: absolute;
+  inset: 0;
+  background-image: var(--img);
+  background-size: cover;
+  background-position: center;
+  filter: grayscale(0.4) contrast(1.05) brightness(0.74);
+  transform: scale(1.03);
+  transition: transform 0.9s cubic-bezier(0.2, 0.6, 0.2, 1), filter 0.6s ease;
+}
+.location-tile::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0) 30%, rgba(0, 0, 0, 0.7) 100%);
+  pointer-events: none;
+}
+.location-tile:hover .location-media,
+.location-tile:focus-visible .location-media {
+  transform: scale(1.07);
+  filter: grayscale(0) contrast(1.05) brightness(0.85);
+}
+.location-overlay {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  padding: clamp(1.75rem, 4vw, 3.25rem);
+  color: #fff;
+}
+.location-overlay .eyebrow {
+  color: rgba(255, 255, 255, 0.72);
+}
+.location-overlay .display {
+  color: #fff;
+  margin: 0.5rem 0 1.5rem;
+}
+.location-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 0.72rem;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  font-weight: 500;
+  color: #fff;
+  padding-bottom: 0.3rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+  transition: border-color 0.3s ease, gap 0.3s ease;
+}
+.location-tile:hover .location-cta,
+.location-tile:focus-visible .location-cta {
+  border-color: #fff;
+  gap: 1rem;
+}
+.location-tag {
+  position: absolute;
+  top: clamp(1.25rem, 3vw, 2rem);
+  right: clamp(1.25rem, 3vw, 2rem);
+  z-index: 1;
+  font-size: 0.62rem;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  font-weight: 500;
+  color: #fff;
+  padding: 0.45rem 0.8rem;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  backdrop-filter: blur(2px);
+}
+@media (max-width: 760px) {
+  .location-grid { grid-template-columns: 1fr; }
+  .location-tile { min-height: 52vh; }
+}
+
+/* Homepage: tiles sit inside the page container instead of running full bleed. */
+.location-grid--contained {
+  margin-top: clamp(3rem, 6vw, 4.5rem);
+  gap: clamp(1rem, 2vw, 1.5rem);
+  background: none;
+  border: none;
+}
 
 /* ───────── About page ───────── */
 .about-hero {
@@ -732,6 +1053,38 @@ h3.display { font-size: clamp(1.5rem, 3vw, 2.25rem); line-height: 1.1; }
   letter-spacing: 0.18em;
   text-transform: uppercase;
   color: var(--muted);
+}
+
+/* Homepage: footer takes the old Reservations band colors (ink background,
+   bg-colored text), so it inverts with each theme the same way the band did. */
+.site-footer--inverted {
+  border-top: none;
+  background: var(--ink);
+  color: var(--bg);
+  padding-top: clamp(3.5rem, 7vw, 5.5rem);
+}
+
+.site-footer--inverted .footer-grid h5,
+.site-footer--inverted .legal {
+  color: color-mix(in srgb, var(--bg) 55%, transparent);
+}
+
+.site-footer--inverted .footer-grid .brand-sub {
+  color: color-mix(in srgb, var(--bg) 65%, transparent);
+}
+
+.site-footer--inverted .footer-grid a { color: color-mix(in srgb, var(--bg) 88%, transparent); }
+.site-footer--inverted .footer-grid a:hover { color: var(--bg); }
+
+.site-footer--inverted .legal {
+  border-top-color: color-mix(in srgb, var(--bg) 16%, transparent);
+}
+
+/* Homepage: shorter booking tiles (about 22% less tall). */
+.location-grid--contained .location-tile { min-height: clamp(330px, 56vh, 590px); }
+
+@media (max-width: 760px) {
+  .location-grid--contained .location-tile { min-height: clamp(280px, 40vh, 420px); }
 }
 
 /* ───────── Generic content pages (services, faq, new clients) ───────── */
